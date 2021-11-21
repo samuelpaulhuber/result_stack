@@ -1,2 +1,6 @@
 11/19 - 3hrs 
     Project setup and initial structure
+11/20 - 3hrs
+    Generate search results support
+    Hook result UI to data from github
+    Add paging support

@@ -7,19 +7,27 @@ function QueryByName(searchString, setNameResults){
         return null;
     }
     
+    searchString = encodeURI(searchString);
+
     axios.get(`${apiUrl}fullname:${searchString}`).then((response) => {
         setNameResults(response.data);
     });
 }
 
-function QueryByEmail(searchString, setEmailResults){
+function QueryForUser(searchString, pageNumber, setEmailResults, results){
+
     if(!searchString){
         return null;
     }
+    
+    var url = encodeURI(`${apiUrl}${searchString}&page=${pageNumber}&per_page=3`);
 
-    axios.get(`${apiUrl}email:${searchString}`).then((response) => {
+    axios.get(url).then((response) => {
+        if(results){
+            response.data.items = [...results, ...response.data.items];
+        }
         setEmailResults(response.data);
     });
 }
 
-export default QueryByEmail
+export default QueryForUser
