@@ -1,18 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = 'https://api.github.com/search/users?q=';
-
-function QueryByName(searchString, setNameResults){
-    if(!searchString){
-        return null;
-    }
-    
-    searchString = encodeURI(searchString);
-
-    axios.get(`${apiUrl}fullname:${searchString}`).then((response) => {
-        setNameResults(response.data);
-    });
-}
+const apiUrl = 'https://api.github.com/';
 
 function QueryForUser(searchString, pageNumber, setEmailResults, results){
 
@@ -20,7 +8,7 @@ function QueryForUser(searchString, pageNumber, setEmailResults, results){
         return null;
     }
     
-    var url = encodeURI(`${apiUrl}${searchString}&page=${pageNumber}&per_page=3`);
+    var url = encodeURI(`${apiUrl}search/users?q=${searchString}&page=${pageNumber}&per_page=3`);
 
     axios.get(url).then((response) => {
         if(results){
@@ -30,4 +18,16 @@ function QueryForUser(searchString, pageNumber, setEmailResults, results){
     });
 }
 
-export default QueryForUser
+function QueryUserData(user, setUserData){
+    if(!user)
+        return;
+    var url = encodeURI(`${apiUrl}users/${user}`)
+    axios.get(url).then((response) => {
+        setUserData(response.data);
+    });
+}
+
+export {
+    QueryForUser,
+    QueryUserData
+}

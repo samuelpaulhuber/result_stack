@@ -3,19 +3,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SearchBar from './components/searchBar'
 import ResultsGrid from './components/resultsGrid';
 import { Container } from 'react-bootstrap';
-import QueryForUser from './api/github';
+import { QueryForUser } from './api/github';
 import React, { useState } from 'react';
-import { Button, Row } from "react-bootstrap";
+import ViewMoreButton from './components/viewMore';
 
 function App() {
   const [emailSearchResults, setEmailSearchResults] = useState(0);
   const [viewMoreClicks, setViewMoreClicks] = useState(1);
   const [searchText, setSearchText] = useState('');
   
-  function searchClicked(){
+  function searchForMatch(text){
+    setSearchText(text);
     setViewMoreClicks(1);
+
     setEmailSearchResults(null);
-    QueryForUser(searchText, 1, setEmailSearchResults);
+    QueryForUser(text, 1, setEmailSearchResults);
   }
 
   function viewMoreClicked() {
@@ -28,15 +30,11 @@ function App() {
   let numberResults = emailSearchResults?.items?.length;
   let totalCount = emailSearchResults?.total_count;
   return (
-    <Container className="app-container">
-        <SearchBar onSearchClicked={searchClicked} setSearchValue={setSearchText}></SearchBar>
+    <Container className="app-container" data-testid="main-container">
+        <SearchBar searchForMatch={searchForMatch} ></SearchBar>
         <ResultsGrid emailSearchResults={emailSearchResults}></ResultsGrid>
         {numberResults > 0 && viewMoreClicks * 3 < totalCount? 
-          <Container>
-            <Button variant="outline-info" className="view-more" size="lg" onClick={() => viewMoreClicked()}>
-            View More
-          </Button> 
-          </Container>: 
+          <ViewMoreButton onViewMoreClicked={viewMoreClicked}></ViewMoreButton>: 
           <></>}
         
     </Container>

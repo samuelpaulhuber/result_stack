@@ -1,39 +1,54 @@
 import { Card, Button, Col, ListGroup } from "react-bootstrap";
-import logo from '../../logo.svg';
+import React, { useEffect, useState } from 'react';
+import { QueryUserData } from '../../api/github';
 import './searchResult.css';
 
 function SearchResult(props) {
-    var { login, avatar_url, html_url, followers_url, following_url, starred_url, repos_url } = props.resultData;
-    return (
-        <Col className='result-card' xs={6} md={4}>
+    const [userData, setUserData] = useState('');
+    var { login } = props.resultData;
+    var { name, location, email, created_at, updated_at, avatar_url, public_repos, html_url } = userData;
+    
+    useEffect(() => {
+            QueryUserData(login, setUserData);
+    }, [login]);
+    
+    return (        
+        <Col className='result-card' data-testid='result-column' xs={6} md={4}>
+            {userData ? 
             <Card>
                 <Card.Img variant="top" src={avatar_url} />
                 <Card.Body>
-                    <Card.Title>{login}</Card.Title>
-                    <Card.Text>
-                        <ListGroup>
-                            <ListGroup.Item>
-                                <a href={followers_url} target="_blank">Followers</a>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <a href={following_url} target="_blank">Following</a>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <a href={starred_url} target="_blank">Starred Projects</a>
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <a href={repos_url} target="_blank">Repositories</a>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Card.Text>
+                    <Card.Title>{name}</Card.Title>
+                    <ListGroup>
+                        <ListGroup.Item>
+                            Username: {login}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Email: {email ?? 'Not Public'}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Location: {location}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Public Repos Count: {public_repos}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Last Updated: {new Date(updated_at).toLocaleDateString()}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Created On: {new Date(created_at).toLocaleDateString()}
+                        </ListGroup.Item>
+                    </ListGroup>
                     <Button
                         className="card-button"
                         variant="outline-primary"
                         onClick={() => window.open(html_url, "_blank")}
                     >Visit Profile</Button>
                 </Card.Body>
-            </Card>
+            </Card> :
+            <></>}
         </Col>
+        
     );
 }
 export default SearchResult;

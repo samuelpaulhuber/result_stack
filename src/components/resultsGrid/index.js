@@ -1,11 +1,10 @@
 import { Container, Row } from "react-bootstrap";
 import SearchResult from "../searchResult";
-import PagingToolbar from "../pagingToolbar";
 
 function ResultsGrid(props) {
 
     return (
-        <Container>
+        <Container data-testid="results-grid">
             {props.emailSearchResults?.items?.length > 0 ?
                 <Row>
                     {props.emailSearchResults.items.map((item)=> {
@@ -16,11 +15,6 @@ function ResultsGrid(props) {
                 <h2>Search to Get Started</h2> 
                 : <h2>No Results</h2>
             }
-            {/* Total {props.emailSearchResults.items.length} */}
-
-            {/* <Row>
-                <PagingToolbar></PagingToolbar>
-            </Row> */}
         </Container>
     );
 }

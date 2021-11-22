@@ -1,7 +1,10 @@
-import { Container, InputGroup, FormControl, Row, Button } from "react-bootstrap";
-import React, { useState } from 'react';
+import { Container, InputGroup, FormControl, Row } from "react-bootstrap";
+import _ from 'lodash';
 
 function SearchBar(props) {
+    const debounceSearch = _.debounce((e) => {
+        props.searchForMatch(e.target.value);
+    }, 300);
     return (
         <Container>
             <Row>
@@ -10,11 +13,8 @@ function SearchBar(props) {
                         placeholder="Search by Name or Email"
                         aria-label="Search"
                         aria-describedby="search-addon"
-                        onInput={e => props.setSearchValue(e.target.value)}
+                        onInput={e => {debounceSearch(e)}}
                     />
-                    <Button onClick={() => props.onSearchClicked()} variant="outline-secondary" id="search-addon">
-                        Search
-                    </Button>
                 </InputGroup>
             </Row>
         </Container>
