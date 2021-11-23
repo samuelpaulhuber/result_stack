@@ -1,33 +1,35 @@
 import axios from 'axios';
-
+import { numberOfResults } from '../constants';
 const apiUrl = 'https://api.github.com/';
 
-function QueryForUser(searchString, pageNumber, setEmailResults, results){
-
-    if(!searchString){
+// searches for users that match the given search string
+function searchForUser(searchString, pageNumber, setEmailResults, results) {
+    if (!searchString) {
         return null;
     }
-    
-    var url = encodeURI(`${apiUrl}search/users?q=${searchString}&page=${pageNumber}&per_page=3`);
+
+    const url = encodeURI(`${apiUrl}search/users?q=${searchString}&page=${pageNumber}&per_page=${numberOfResults}`);
 
     axios.get(url).then((response) => {
-        if(results){
+        if (results) {
+            // if we already have results add the new ones
             response.data.items = [...results, ...response.data.items];
         }
         setEmailResults(response.data);
     });
 }
 
-function QueryUserData(user, setUserData){
-    if(!user)
+// gets particular user based on username
+function getUserInfo(user, setUserData) {
+    if (!user)
         return;
-    var url = encodeURI(`${apiUrl}users/${user}`)
+    const url = encodeURI(`${apiUrl}users/${user}`)
     axios.get(url).then((response) => {
         setUserData(response.data);
     });
 }
 
 export {
-    QueryForUser,
-    QueryUserData
+    searchForUser,
+    getUserInfo
 }

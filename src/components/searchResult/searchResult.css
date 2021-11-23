@@ -4,3 +4,9 @@
 .result-card {
     margin-top: 10vh;
 }
+.info-label {
+    font-weight: bold;
+}
+.info-value {
+    text-align: right;
+}

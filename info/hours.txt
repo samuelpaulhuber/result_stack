@@ -4,3 +4,12 @@
     Generate search results support
     Hook result UI to data from github
     Add paging support
+11/21 - 3hrs
+    Implment searching for specific user
+    Clean-up code structure
+    Implement tests
+    Deploy to Netlify
+11/22 - 1hr
+    Add to improvements and questions
+    Check tests
+    Code clean-up

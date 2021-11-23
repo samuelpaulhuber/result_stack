@@ -10,8 +10,8 @@ test('renders search result column', () => {
     following_url: '',
     starred_url: '',
     repos_url: ''
-  };  
-  render(<SearchResult resultData={resultData}/>);
+  };
+  render(<SearchResult resultData={resultData} />);
   const element = screen.getAllByTestId('result-column')[0];
   expect(element).toBeInTheDocument();
 });

@@ -1,0 +1,7 @@
+Suggestions for Improvments:
+1. Implement endless scrolling with loader and remove the "View More" button.
+2. Typeahead in the search bar.
+3. Add graphics to display user's git hub activity (commits, stars, etc).
+    - Compare multiple users using these graphs.
+4. Add information from other sources in proble (LinkedIn, blog, etc).
+5. List projects user has committed to.

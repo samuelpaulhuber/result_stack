@@ -1,3 +1,12 @@
-1. Any specific data that should be displayed about the users returned?
+1. How will this be used? 
+    - Is there a reason not to use github's interface for searching?
+        - What is it they are lacking that is desired?
 2. How many results should be returned?
-3. Should the number of results be configurable by the user?
+    - Should the number of results be configurable by the user?
+3. Should we add the following?
+    - Company
+    - Blog
+    - Bio
+4. Should this be designed around a mobile user first?
+    - Would this make sense as PWA?
+ 
